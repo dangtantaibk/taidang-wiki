@@ -1,0 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "jdbc:mysql://35.198.196.35:3306/24h"
+}
+
+model views {
+  slug  String @id @db.VarChar(128)
+  count BigInt @default(1)
+}
+
+
+  // url      = env("DATABASE_URL")
