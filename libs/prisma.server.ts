@@ -10,7 +10,7 @@ export let __db: PrismaClient
 
 if (process.env.NODE_ENV === 'production') {
   __db = new PrismaClient({
-    datasources: { db: { url: 'mysql://taidt:eHQ))h(%)aI(T9UagbP5u$pY@35.198.196.35:3306/blog' } },
+    datasources: { db: { url: 'mysql://root:p4$Gs*4RwcS$zx9@localhost:3306/blog' } },
   })
 } else {
   if (!global.prisma) {
