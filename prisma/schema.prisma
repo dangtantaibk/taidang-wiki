@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://root:p4$Gs*4RwcS$zx9@localhost:3306/blog"
 }
 
 model views {
