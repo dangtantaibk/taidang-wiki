@@ -9,7 +9,9 @@ import { PrismaClient } from '@prisma/client'
 export let __db: PrismaClient
 
 if (process.env.NODE_ENV === 'production') {
-  __db = new PrismaClient()
+  __db = new PrismaClient({
+    datasources: { db: { url: 'mysql://root:p4$Gs*4RwcS$zx9@localhost:3306/24h' } },
+  })
 } else {
   if (!global.prisma) {
     global.prisma = new PrismaClient()
