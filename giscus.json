@@ -1,0 +1,7 @@
+{
+    "origins": [
+      "https://taidang.wiki",
+      "http://localhost:3535"
+    ],
+    "defaultCommentOrder": "newest"
+  }
