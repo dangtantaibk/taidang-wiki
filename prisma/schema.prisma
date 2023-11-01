@@ -6,11 +6,11 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = "mysql://root:p4$Gs*4RwcS$zx9@localhost:3306/blog"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model views {
-  slug  String @id @db.VarChar(128)
+  slug  String @id
   count BigInt @default(1)
 }
