@@ -44,4 +44,4 @@ yarn-error.log*
 tsconfig.tsbuildinfo
 
 /prisma/migrations/*
-*.db
+/prisma/*.db
