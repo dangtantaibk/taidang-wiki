@@ -45,3 +45,4 @@ tsconfig.tsbuildinfo
 
 /prisma/migrations/*
 /prisma/*.db
+/prisma/dev*
