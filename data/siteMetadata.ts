@@ -11,7 +11,8 @@ export let siteMetadata = {
   youtube: 'https://www.youtube.com',
   linkedin: 'https://www.linkedin.com/in/dang-tan-tai/',
   locale: 'en-US',
-  analyticsURL: 'https://analytics.taidang.wiki',
+  analyticsURL:
+    'https://analytics.taidang.wiki/share/ftdg3kU2chXu7Ush/T%C3%A0i%20%C4%90%E1%BA%B7ng%20Wiki',
   analytics: {
     plausibleDataDomain: '',
     simpleAnalytics: true, // true | false
