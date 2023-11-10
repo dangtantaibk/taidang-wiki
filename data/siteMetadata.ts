@@ -16,7 +16,7 @@ export let siteMetadata = {
   analytics: {
     plausibleDataDomain: '',
     simpleAnalytics: true, // true | false
-    umamiWebsiteId: 'fef9c9cc-bf0c-49cb-a02f-ef49e72aeb4f',
+    umamiWebsiteId: 'de0d1791-1718-4db1-a7c9-7891c35ade6e',
     googleAnalyticsId: '', // e.g. UA-000000-2 or G-XXXXXXX
   },
   socialAccounts: {
