@@ -11,11 +11,11 @@ export let siteMetadata = {
   youtube: 'https://www.youtube.com',
   linkedin: 'https://www.linkedin.com/in/dang-tan-tai/',
   locale: 'en-US',
-  analyticsURL: 'https://analytics.taidang.wiki/share/tAfY0Uldv7cgNF0W/TaiDangWiki',
+  analyticsURL: 'https://analytics.taidang.wiki/share/JhIOAaP5WSvjhToB/TaiDangWiki',
   analytics: {
     plausibleDataDomain: '',
     simpleAnalytics: true, // true | false
-    umamiWebsiteId: 'de0d1791-1718-4db1-a7c9-7891c35ade6e',
+    umamiWebsiteId: 'a1fd41e7-90d2-4b79-862c-1cd802e0b851',
     googleAnalyticsId: '', // e.g. UA-000000-2 or G-XXXXXXX
   },
   socialAccounts: {
