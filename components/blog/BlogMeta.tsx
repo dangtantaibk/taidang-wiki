@@ -21,11 +21,11 @@ export function BlogMeta({ date, slug, readingTime }: BlogMetaProps) {
           {t('blog.reading_time', { time: Math.ceil(readingTime.minutes) })}
         </span>
       </div>
-      <span className="mx-2">{` • `}</span>
+      {/* <span className="mx-2">{` • `}</span>
       <div className="flex items-center">
         <Twemoji emoji="eye" size="" />
         <ViewCounter className="ml-1.5 md:ml-2" slug={slug} />
-      </div>
+      </div> */}
     </dd>
   )
 }
