@@ -5,6 +5,7 @@ let withBundleAnalyzer = require('@next/bundle-analyzer')({
 let { i18n } = require('./next-i18next.config')
 
 module.exports = withBundleAnalyzer({
+  // distDir: 'build',
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   eslint: {
