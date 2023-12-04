@@ -1,9 +1,12 @@
 ---
-title: 'Does JavaScript Promise.all() run in parallel or sequential?'
+title: 'JavaScript chạy Promise.all() song song hay tuần tự?'
 date: '2023-09-04'
 tags: ['javascript', 'promise', 'parallel', 'sequential', 'concurrently']
 draft: false
-summary: "JavaScript is a single-threaded programming language, so it can't run multiple things at the same time, Promise.all() actually runs promises concurrently, not in parallel!. Let's dive in to see how it works."
+summary: "JavaScript là một ngôn ngữ lập trình single-threaded, 
+vì vậy, nó không thể chạy nhiều tác vụ trong cùng một khoảng thời gian, 
+Promise.all() thực sự chạy các promises một cách concurrently, nhưng nó không phải là parallel!. 
+Hãy cùng đi sâu vào để xem nó hoạt động như thế nào."
 images: ['/static/images/road.jpg']
 authors: ['default']
 ---
@@ -15,7 +18,7 @@ import UnsplashPhotoInfo from './UnsplashPhotoInfo.tsx'
 
 <UnsplashPhotoInfo photoURL="https://unsplash.com/photos/rafblRbne3o" author="Karsten Würth" />
 
-Let's say you have a list of async tasks (each return a **Promise**).
+Giả sự bạn đang có những tác vụ không đồng bộ *async* (mỗi tác vụ sẽ return về một **Promise**).
 
 ```javascript
 let promise1 = async function () {
@@ -29,9 +32,9 @@ let promise3 = async function () {
 }
 ```
 
-What would you choose to run them?
+Bạn sẽ chọn gì để chạy những tác vụ này?
 
-Awaiting each promise one by one:
+Chờ từng promise một chạy xong:
 
 ```javascript
 await promise1()
@@ -40,16 +43,17 @@ await promise3()
 // do other stuff
 ```
 
-Or run them all at once:
+Hoặc sẽ chạy tất cả chúng một lần:
 
 ```javascript
 await Promise.all([promise1(), promise2(), promise3()])
 // do other stuff
 ```
 
-The first approach is running them **sequentially**, one after another. It means that the next promise will start only after the previous one is resolved.
+Cách tiếp cận đầu tiên là chạy chúng **tuần tự**, cái này sau cái kia. 
+Điều này có nghĩa rằng promise tiếp theo sẽ chỉ chạy sau khi promise trước đó hoàn thành.
 
-Like this:
+Giống như thế này:
 
 ```javascript
 promise1().then(() => {
@@ -61,40 +65,49 @@ promise1().then(() => {
 })
 ```
 
-The second approach is well-known as running them in **"parallel"**, meaning that all promises will start at the same time.
-It's useful when you don't need to wait for the previous promise to be resolved before starting the next one.
+Cách tiếp cận thứ 2 thì như chúng ta đã biết, sẽ chạy chúng **"song song - parallel"**, 
+điều này có nghĩa là tất cả promises sẽ chạy đồng thời cùng một lúc.
+Nó thì hữu dụng cho việc bạn không muốn chờ promise trước đó hoàn thành thì mới bắt đầu chạy cho promise kế tiếp.
 
-But does it really run in parallel (or all at once)? <Twemoji emoji="thinking-face" />
+Nhưng nó có thật sự là chạy parallel (hoặc tất cả cùng một lúc)? <Twemoji emoji="thinking-face" />
 
-The answer is no. JavaScript is single-threaded programming language, so it can't run multiple things at the exact same time (except for some circumstances such as [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).)
-`Promise.all()` actually runs them concurrently, not in parallel!
+Câu trả lời là không. JavaScript là một ngôn ngữ lập trình **single-threaded**, vì vậy, nó không thể chạy
+nhiều thứ trong cùng một khoảng thời gian 
+so it can't run multiple things at the exact same time (ngoại trừ một số trường hợp như 
+[web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).)
+`Promise.all()` thực sự chạy chúng *đồng thời - concurrently*, không phải là song song - parallel!
 
-What's the difference?
+Sự khác nhau là gì?
 
-## Concurrent programming vs Parallel programming
+## Lập trình Concurrent vs Lập trình Parallel
 
-> TL;DR: Concurrent programming is about dealing with a lot of things at once, while parallel programming is about doing a lot of things at once.
+> TL;DR: Lập trình Concurrent là nhiều tác vụ được xử lý cùng một lúc, 
+trong khi đó lập trình parallel là làm nhiều tác vụ trong cùng một lúc.
 
-See also this excellent explanation from [Haskell wiki](https://wiki.haskell.org/Parallelism_vs._Concurrency).
+Xem thêm sự giải thích đầy đủ và chi tiết hơn ở [Haskell wiki](https://wiki.haskell.org/Parallelism_vs._Concurrency).
 
-A dead-simple example for a 9-year-old kid:
+Một ví dụ đơn giản để giải thích với bé 9 tuổi:
 
-- **Concurrency**: 2 lines of customers ordering food from a single cashier (lines take turns ordering).
-- **Parallelism**: 2 lines of customers ordering food at the same time from 2 cashiers.
+- **Concurrency**: 2 lines cho khách hàng có thể gọi món từ một người thu ngân (các line thay phiêu nhau đặt hàng).
+- **Parallelism**: 2 lines cho khách hàng có thể gọi món đồng thời từ 2 người thu ngân khác nhau.
 
-As so, what `Promise.all()` does is, it adds the promises to an event loop queue and calls them all together.
-But it waits for each one to resolve before moving on.
-`Promise.all` will stop if the first promise rejects, unless you handle the error yourself (e.g. with `.catch()`).
+Như vậy, thì `Promise.all()` sẽ là gì, nó sẽ thêm promises vào một queue vòng lặp các event và sau đó gọi tất cả chúng một lần.
+Nhưng nó đợi mỗi promise xử lý xong trước khi tiếp tục xử lý cái tiếp theo.
+`Promise.all` sẽ dùng nếu như promise đầu tiên bị xử lý lỗi,trừ khi bạn handle cho các lỗi của mỗi tác vụ (ví dụ: `.catch()`).
 
-That's the major difference between concurrent and parallel, with _concurrent execution_, promises run one after another but don't have to wait for previous ones to end. They make progress at the same time.
-In contrast, _parallel execution_ runs promises at the exact same time in separate processes.
-This allows them to progress completely separately at their own speed.
+Đó là sự khác biệt chính giữa **concurrent** và **parallel**, với _concurrent execution_, 
+promises sẽ chạy nối tiếp nhau nhưng sẽ không cần đợi tác vụ trước đó hoàn thành.
+Chúng làm như là cùng chạy đồng thời.
+Ngược lại, _parallel execution_ sẽ chạy các promises chính xác là cùng một thời điểm
+trong các quy trình riêng biệt.
+Điều này cho phép chúng có thể hoàn thành riêng biệt với những tốc độ hoàn thành tuỳ vào mỗi tác vụ.
 
-## Conclusion
+## Kết luận
 
-The answer for the question in the title is: `Promise.all()` runs concurrently, all promises execute almost at the same time, but not in parallel.
+Câu trả lời cho câu hỏi tiêu đề: `Promise.all()` chạy concurrently, tất cả promises thực thi gần như 
+cùng một lúc, nhưng nó không phải như là parallel.
 
-If you have a list promises that don't depend on each other, you can run them concurrently (or parallel-like):
+Nếu bạn có một list các promises và chúng không phụ thuộc vào nhau, bạn có thể chạy chúng concurrently (hoặc parallel-like):
 
 ```javascript
 await Promise.all([promise1(), promise2(), promise3()])

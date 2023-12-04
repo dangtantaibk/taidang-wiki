@@ -1,9 +1,10 @@
 ---
-title: "Introduction to Committing with Conventional Commit"
+title: "Giới thiệu về Committing với Conventional Commit"
 date: "2023-01-01"
 tags: ['commit', 'git', 'conventional-commit']
 draft: false
-summary: "Conventional commit is a specific form of committing which gives software developers a uniform system for organizing and describing their changes, making it easier to keep track of updates"
+summary: "Conventional commit là một hình thứ commiting cụ thể, mang lại cho các nhà phát triển phần mềm 
+một hệ thống thống nhất để tổ chức và mô tả các thay đổ của họ, giúp việc theo dõi các thay đổi một cách dễ dàng hơn"
 images: ["/static/images/commit.jpg"]
 authors: ["default"]
 ---
@@ -11,34 +12,34 @@ authors: ["default"]
 import Twemoji from './Twemoji.tsx'
 import UnsplashPhotoInfo from './UnsplashPhotoInfo.tsx'
 
-![thumbnail-image](/static/images/commit.jpg)
-<UnsplashPhotoInfo photoURL="https://unsplash.com/photos/wbXdGS_D17U" author="Ilya Pavlov" />
+![thumbnail-image](/static/images/conventional-commit.jpg)
+<UnsplashPhotoInfo photoURL="https://unsplash.com/photos/blue-and-black-penguin-plush-toy-UT8LMo-wlyk" author="Roman Synkevych" />
 
-## Introduction
+## Giới thiệu
 
-Conventional commit is a specific form of committing which gives software developers a uniform system for organizing and describing their changes, making it easier to keep track of updates.
-This type of commit generally follows a strict and consistent format, making it easier to understand what changes were made and why.
+Conventional commit là một hình thứ commiting cụ thể, mang lại cho các nhà phát triển phần mềm 
+một hệ thống thống nhất để tổ chức và mô tả các thay đổ của họ, giúp việc theo dõi các thay đổi một cách dễ dàng hơn.
+Loại commit này thường tuân theo một định dạng nghiêm ngặt và nhất quán, giúp dễ hiểu hơn những gì đã được thay đổi và tại sao.
 
-The conventional commit typically follows a specific format, such as:
+Conventional commit tiêu biểu sẽ tuân theo một định dạng cụ thể, ví dụ: 
 
 ```bash
 <type>[optional scope]: <description>
 ```
+Trường hợp `type` là chủ đề của commit, nó cho biết loại thay đổi đã được thực hiện và nó phải là một trong các loại sau:
 
-Where the `type` is subject of the commit, it indicates the type of change that was made and should be one of the following types:
-
-- **feat**: a feature or new addition to the project
-- **fix**: a bug fix
-- **refactor**: refactoring of code or changes to the project infrastructure
-- **style**: changes to the formatting, white-space, etc.
-- **docs**: changes to documentation
-- **perf**: a code change that improves performance
-- **chore**: minor changes, such as updating the version of a dependency, fixing a typo, etc.
+- **feat**: một tíng năng hoặc một bổ sung mới cho dự án
+- **fix**: sửa lỗi
+- **refactor**: refactoring of code hoặc thay đổi cấu trúc của dự án
+- **style**: thay đổi formatting, khoảng trắng, etc.
+- **docs**: thay đổi tài liệu 
+- **perf**: 1 code được thay đổi nhằm cải thiện performance
+- **chore**: những thay đổi nhỏ, chẳng hạn như cập nhật version cho một dependency, sửa lỗi đánh máy, etc.
 - ...
 
-The `scope` is optional and is used to indicate the part of the project that was changed, such as **api**, **ui**, **database**, etc.
+Phần `scope` thì không bắt buộc và được sử dụng để chỉ ra phần của dự án đã bị thay đổi, ví dụ như **api**, **ui**, **database**, etc.
 
-The `description` is a short description of the change, it should be written in the imperative mood, such as "change" instead of "changed" or "changes".
+Phần `description` là một mô tả ngắn về những thay đổi, nó nên được viết ở thể mệnh lệnh, ví dụ như "change" thay vì "changed" hoặc "changes".
 
 Example:
 
@@ -52,59 +53,63 @@ or
 fix: prevent racing of requests
 ```
 
-## Why use conventional commit?
+## Tại sao nên sử dụng conventional commit?
 
-Conventional commit helps to ensure that commits are organized and consistent. This makes it easier to read and understand what changes have been made and why. It also makes it easier to track down and understand related issues and pull requests.
+Conventional commit giúp đảm bảo rằng commits có tổ chức và nhất quán.
+Điều này giúp dễ đọc và dễ hiểu những gì đã được thay đổi và tại sao.
+Nó cũng làm cho dễ theo dõi và hiểu các vấn đề liên quan và pull request.
 
-By following the conventional commit format, teams can also easily create commit messages that follow the same structure and format. This makes it easier to review and understand the changes that have been made, as well as ensure that changes are documented in the same way each time.
+Bằng cách theo định dạng conventional commit, teams có thể dễ dàng tạo ra các nội dung commit theo cùng cấu trúc và định dạng.
+Điều này giúp bạn dễ dàng xem lại và hiểu được những gì đã được thay đổi, cũng như đảm bảo ràng các thay đổi được ghi lại một cách như nhau cho mỗi lần.
 
-In addition, conventional commit is a great way to keep the project’s codebase organized and consistent. This helps to make sure that the codebase is easy to maintain and read, as well as reducing the amount of time spent debugging and refactoring.
+Ngoài ra, conventional commit cũng là một cách tuyệt vời để giữ cho codebase của dự án có tổ chức và thống nhất.
+Điều này giúp cho codebase dễ bảo trì và dễ đọc, cũng như giảm thời gian cho việc debugging và refactoring.
 
-## Set up conventional commit to your project
+## Cấu hình conventional commit cho project của bạn
 
-In this post, I will show you how to set up conventional commit to your project using [commitlint](https://commitlint.js.org/#/)
+Trong bài viết này, tôi sẽ chỉ cho bạn cách cấu hình conventional commit cho project của bạn sử dụng [commitlint](https://commitlint.js.org/#/)
 
-<Twemoji emoji="keycap-1" /> Install commitlint and its dependencies:
+<Twemoji emoji="keycap-1" /> Cài đặt commitlint và những dependency của nó:
 
 ```bash
 $ npm install -g @commitlint/cli @commitlint/config-conventional
 ```
 
-<Twemoji emoji="keycap-2" /> Add a commitlint config file to your project:
+<Twemoji emoji="keycap-2" /> Thêm file config cho commitlint trong project của bạn:
 
-Using this command to create a config file with basic configuration:
+Sử dụng command này để tạo ra một file config với các cấu hình cơ bản: 
 
 ```bash
 $ echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
 ```
-
-The file should have the following content:
+File phải có nội dung sau:
 
 ```js
 module.exports = { extends: ['@commitlint/config-conventional'] }
 ```
 
-<Twemoji emoji="keycap-3" /> Add `husky` to lint commits before they are created:
+<Twemoji emoji="keycap-3" /> Thêm `husky` để lint commits trước khi chúng được tạo:
 
 ```bash
 $ npm install husky --save-dev
 ```
 
-Activate hooks with the following command:
+Kích hoạt hook bằng command sau: 
 
 ```bash
 $ npx husky install
 ```
 
-Your should see the following output:
+Bạn sẽ thấy đầu ra như sau:
 
 ```bash
 husky - Git hooks installed
 ```
 
-and a new `.husky` folder should be created in the root of your project.
+và một filder: `.husky` sẽ được tạo ở project của bạn.
 
-<Twemoji emoji="light-bulb" /> I would highly recommend adding a `postinstall` script in the **package.json** file to automatically install husky hooks after installing dependencies:
+<Twemoji emoji="light-bulb" /> tôi thực sự khuyên bạn thêm 1 script `postinstall` trong file **package.json**
+để tự động cài đặt husky hooks sau khi đã cài đặt các dependency:
 
 ```json
 "scripts": {
@@ -112,24 +117,25 @@ and a new `.husky` folder should be created in the root of your project.
 }
 ```
 
-<Twemoji emoji="keycap-4" /> Add a `commit-msg` hook to lint commits:
+<Twemoji emoji="keycap-4" /> Thêm một hook `commit-msg` để lint commits:
 
 ```bash
 $ npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
 ```
 
-You should see a `commit-msg` file created in the `.husky` folder.
+Bạn có thể thấy một file `commit-msg` được tạo trong folder `.husky`.
 
-And that’s it <Twemoji emoji="party-popper" />! Now, whenever you commit, commitlint will check your commit message and make sure it follows the conventional commit format.
+Và thế là xong <Twemoji emoji="party-popper" />! Bây giờ, bất cứ khi nào bạn commit, 
+commitlint sẽ kiểm tra nội dung commit của bạn và chắc chắn rằng nó sẽ tuân theo định dạng conventional commit.
 
-Let’s try it out with an un-conventional commit message:
+Nào, hãy thử với một nội dung commit không tuân theo định dạng:
 
 
 ```bash
 $ git commit -m "Using commitlint and husky to lint commits"
 ```
 
-The commit should fail with the following error:
+Commit sẽ thất bạn với thông báo lỗi như sau:
 
 ```bash
 ⧗   input: Using commitlint and husky to lint commits
@@ -142,15 +148,15 @@ The commit should fail with the following error:
 husky - commit-msg hook exited with code 1 (error)
 ```
 
-As you can see, commitlint has detected that the commit message is not following the conventional commit format and has provided a helpful error message.
+Như bạn có thể thấy, commitlint đã phát hiện được nội dung commit này không theo conventional commit và cung cấp một nội dung thông báo lỗi hữu ích.
 
-Now, let’s try it again with a conventional commit message:
+Bây giờ, hãy thử lại với một nội dung conventional commit:
 
 ```bash
 $ git commit -m "feat: add commitlint and husky to lint commits"
 ```
 
-The commit should succeed with the following output:
+Commit thành công với thông báo như sau:
 
 ```bash
 [main b40785f] feat: using husky to lint commits
@@ -158,13 +164,12 @@ The commit should succeed with the following output:
 	create mode 100755 .husky/commit-msg
 ```
 
-## Conclusion
+## Kết luận
 
-Conventional commit is a great way to ensure that commit messages are organized and consistent.
-By following the conventional commit format,
-teams can easily create commit messages that follow the same structure and format,
-making it easier to review and understand the changes that have been made.
+Conventional commit là một cách tuyệt vời để đảm bảo rằng nội dung commit thì có tổ chức và nhất quán.
+Bằng cách theo định dạng conventional commit, team có thể dễ dàng tạo ra các nội dung commit theo cùng cú pháp và định dạng,
+làm cho nó dễ dàng review và hiểu được những gì đã được thay đổi.
 
-Therefore, it’s important to use this type of commit when developing projects so that changes are well-documented and tracked.
+Vì thế, điều quan trọng là sử dụng loại commit này khi phát triển dự án để những thay đổi được ghi lại và theo dõi một cách rõ ràng.
 
 Happy committing <Twemoji emoji="clinking-beer-mugs" />

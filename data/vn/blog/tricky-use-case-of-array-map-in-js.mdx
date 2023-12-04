@@ -1,9 +1,10 @@
 ---
-title: 'Tricky use case of Array.prototype.map in JS'
+title: 'Một vài trường hợp phức tạp khi sử dụng Array.prototype.map trong JS'
 date: '2020-09-22'
 tags: ['javascript', 'array', 'map', 'functional-programming', 'use-cases']
 draft: false
-summary: "If you are familiar with functional programming, Array.prototype.map must be a function that you work with every day. We encountered a tricky use case of it at Cốc Cốc recently, it took me a while to figure out, and here's the answer..."
+summary: "Nếu bạn đã quen thuộc với functional programming, Array.prototype.map phải là một function mà bạn làm việc với nó hằng ngày.
+Gần đây chúng tôi đã gặp một vài trường hợp phức tạp khi sử dụng nó, tôi phải mất một khoảng thời gian để tìm hiểu tại sao, và đây là câu trả lời, ..."
 images: ['/static/images/jenga-boy.jpg']
 authors: ['default']
 ---
@@ -14,17 +15,18 @@ import UnsplashPhotoInfo from './UnsplashPhotoInfo.tsx'
 ![thumbnail-image](/static/images/jenga-boy.jpg)
 <UnsplashPhotoInfo photoURL="https://unsplash.com/photos/geNNFqfvw48" author="Michał Parzuchowski" />
 
-If you are familiar with [functional programming](https://en.wikipedia.org/wiki/Functional_programming), **Array.prototype.map** must be a **function** that you work with every day.
+Nếu bạn đã quen thuộc với [functional programming](https://en.wikipedia.org/wiki/Functional_programming), 
+**Array.prototype.map** hẳn phải là một **function** mà bạn làm việc hằng ngày.
 
-For me, **map()** is a powerful function, but there might be some tricky use case of it that you don't know about!
+Đối với tôi, **map()** là một function mạnh mẽ, những có thể có một vài trường hợp phức tạp khi sử dụng mà bạn không biết!
 
-Let's walk through some basic knowledge
+Cùng điểm qua một số kiến thức cơ bản
 
-> The **map()** method creates a new array from the calling array by applying a provided **callback function** once for each element of the calling array
+> Phương thức **map()** tạo ra một array mới từ một array, cung cấp bởi **callback function** một lần cho một phần tử của mảng được gọi
 
-## Simple use cases
+## Trường hợp đơn giản
 
-Giving this array
+Cho một mảng
 
 ```js
 let devs = [
@@ -35,9 +37,9 @@ let devs = [
 ]
 ```
 
-What can we do using **map()** function:
+Chúng ta có thể làm gì với function **map()**:
 
-- Getting new values from array
+- Lấy mạng giá trị mới từ mảng
 
 ```js
 let ages = devs.map((dev) => {
@@ -48,7 +50,7 @@ let ages = devs.map((dev) => {
 console.log(ages) // => [25, 25, 24, 23]
 ```
 
-- Extracting values from array of objects
+- Trích xuất giá trị từ các object của array
 
 ```js
 let names = devs.map((dev) => dev.name)
@@ -56,7 +58,7 @@ let names = devs.map((dev) => dev.name)
 console.log(names) // => ["Leo", "Paul", "Jesse", "Ken"]
 ```
 
-- Rendering list in React application
+- Rendering danh sách trong React application
 
 ```js
 import React from 'react'
@@ -72,9 +74,9 @@ export default DeveloperProfiles = ({ devs }) => {
 }
 ```
 
-## Tricky use case
+## Trường hợp phức tạp
 
-It is common to pass the pre-defined **callback** function as **map()** argument like this:
+Thông thường việc truyền một function **callback** được định nghĩa trước như là một argument của mapp như ví dụ:
 
 ```js
 let extractId = (dev) => {
@@ -85,10 +87,9 @@ let ids = devs.map(extractId)
 
 console.log(ids) // => ["1", "2", "3", "4"]
 ```
+Những thói quen này có thể dẫn tới những hành vi không ngờ tới các **functions** nhận nhiều **arguments**.
 
-But this habit may lead to unexpected behaviors with **functions** that take additional **arguments**.
-
-Consider this case - we need to get all **ids** as **numbers**:
+Hãy xem xét trường hợp này - chúng ta cần lấy tất cả **ids** kiểu **numbers**:
 
 ```js
 // ids = ["1", "2", "3", "4"]
@@ -97,27 +98,28 @@ let idsInNumber = ids.map(parseInt)
 console.log(idsInNumber) // => ???
 ```
 
-You might expect the result is `[1, 2, 3, 4]`, but the actual result is `[1, NaN, NaN, NaN]` <Twemoji emoji="astonished-face" />
+Bạn có thể mong đợi kết quả là `[1, 2, 3, 4]`, nhưng kết quả thật sự là `[1, NaN, NaN, NaN]` <Twemoji emoji="astonished-face" />
 
-We encountered this problem at [Cốc Cốc](https://coccoc.com/) recently, it took me a while to figure out, and here's the answer...
+Chúng tôi đã gặp trường hợp này, nó làm tôi mất một khoảng thời gian để tìm hiểu, và đây là câu trả lời
 
-Usually, we use **map()** callback with 1 **argument** (the element being traversed), but **Array.prototype.map** passes 3 arguments:
+Thông thường, chúng ta sử dụng callback **map()** với 1 **argument** (phần tử được duyệt qua), nhưng **Array.prototype.map** truyền 3 arguments:
 
 - the **element**
 - the **index**
-- the **calling array** (which we don't use most of the time)
+- the **calling array** (mà chúng ta hầu như không sử dụng)
 
-And the callback in this case - [parseInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt) is often used with 1 **argument** but it takes 2:
+Và callback trong function này - [parseInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt) 
+thì thường với 1 **argument** nhưng nó nhận 2:
 
 ```js
 // Syntax
 parseInt(string [, radix])
 ```
 
-- `string`: the value to parse
-- `radix`: **[Optional]**: an integer that represent the **radix** (the base in mathematical numeral systems) - usually, it's **10**
+- `string`: giá trị cần parse
+- `radix`: **[Optional]**: một số integer biểu thị cho **radix** (Hệ thống số toàn học) - thông thường, nó là **10**
 
-For example:
+Ví dụ:
 
 ```js
 parseInt('10') // => 10
@@ -126,11 +128,11 @@ parseInt('10', 2) // => 2
 parseInt('10', 4) // => 4
 ```
 
-And here you can see the source of confusion <Twemoji emoji="eyes" />!
+Và đây, bạn có thể thấy được nguyên nhân của việc nhầm lẫn này <Twemoji emoji="eyes" />!
 
-The third **argument** of **map()** is ignored by **parseInt** - but **_not_** the second one!
+**Argument** thứ 3 của **map()** được bỏ qua bởi **parseInt** - nhưng **_không_** với cái thứ 2!
 
-Hence, the **iteration** steps of **map()** look like this:
+Kể từ đây, **iteration** lần lượt qua **map()** có dạng như vầy:
 
 ```js
 // map(parseInt) => map(parseInt(value, index))
@@ -141,11 +143,13 @@ Hence, the **iteration** steps of **map()** look like this:
 /* index is 3 */ parseInt('4', 3) // => NaN
 ```
 
-## Solution
+## Giải pháp
 
-As you've known the source of the problem, the solution is not to pass all of the **map()**'s arguments to your **callback** if you're not sure how it works
+Như bạn đã biết nguồn gốc của vấn đề, giải phảp là không truyền tất cả arguments của **map()** qua **callback** của bạn
+nếu bạn không thực sự hiểu cách nó làm việc.
+if you're not sure how it works
 
-- Passing only the arguments that your callback needs
+- Chỉ tuyền những arguments mà callback của bạn cần.
 
 ```js
 function returnInt(element) {
@@ -161,14 +165,15 @@ function returnInt(element) {
 // => [1, 2, 3, 4]
 ```
 
-- A simpler way to achieve our case like [Airbnb style guide](https://github.com/airbnb/javascript#coercion--numbers)
+- Một cách đơn giản hơn cho trường hợp của chúng tôi như [Airbnb style guide](https://github.com/airbnb/javascript#coercion--numbers)
 
 ```js
 ;['1', '2', '3', '4'].map(Number)
 // => [1, 2, 3, 4]
 ```
 
-And that's what I know about **Array.prototype.map** function, feel free to share your use cases in the comment section <Twemoji emoji="backhand-index-pointing-down" />
+Và đó là những gì tôi biết về function **Array.prototype.map**, 
+bạn có thể chia sẻ trường hợp của mình trong phần bình luận <Twemoji emoji="backhand-index-pointing-down" />
 
 Happy coding!
 

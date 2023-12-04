@@ -10,7 +10,7 @@
   },
   "happy_reading": "Feliz lectura",
   "menu_blog": "Blog",
-  "menu_snippets": "Fragmentos",
+  "menu_snippets": "Snippet",
   "menu_projects": "Proyectos",
   "menu_about": "Sobre mi",
   "menu_resume": "Currículum",
@@ -58,7 +58,7 @@
     "search_posts": "Buscar publicaciones",
     "published_on": "Publicado el",
     "under_construction": "En construcción",
-    "reading_time": "Tiempo de lectura: {{time}}",
+    "reading_time": "Thời gian để đọc: {{time}}",
     "mins": "mins",
     "views": "vistos"
   },
