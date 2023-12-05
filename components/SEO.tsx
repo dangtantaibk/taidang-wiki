@@ -31,7 +31,6 @@ export function BlogSeo(props: BlogSeoProps) {
   let { authorDetails, title, summary, date, lastmod, url, images = [] } = props
   let publishedAt = new Date(date).toISOString()
   let modifiedAt = new Date(lastmod || date).toISOString()
-  // eslint-disable-next-line prettier/prettier
   let imagesArr =
     images.length === 0
       ? [siteMetadata.socialBanner]
