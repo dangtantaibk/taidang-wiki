@@ -66,16 +66,18 @@ API endpoints facilitate the communication between clients and servers. We will 
 
 1. URL shortening. To create a new short URL, a client sends a POST request, which contains one parameter: the original long URL. The API looks like this:
 
+```
 POST api/v1/data/shorten
-    - request parameter: {longUrl\: longURLString}
+    - request parameter: {longUrl: longURLString}
     - return shortURL
-
+```
 
 2. URL redirecting. To redirect a short URL to the corresponding long URL, a client sends a GET request. The API looks like this:
 
+```
 GET api/v1/shortUrl
     - Return longURL for HTTP redirection
-
+```
 ### URL redirecting
 
 Figure 8-1 shows what happens when you enter a tinyurl onto the browser. Once the server receives a tinyurl request, it changes the short URL to the long URL with 301 redirect.
@@ -95,7 +97,7 @@ One thing worth discussing here is 301 redirect vs 302 redirect.
 
 Each redirection method has its pros and cons. If the priority is to reduce the server load, using 301 redirect makes sense as only the first request of the same URL is sent to URL shortening servers. However, if analytics is important, 302 redirect is a better choice as it can track click rate and source of the click more easily.
 
-The most intuitive way to implement URL redirecting is to use hash tables. Assuming the hash table stores <shortURL, longURL> pairs, URL redirecting can be implemented by the following:
+The most intuitive way to implement URL redirecting is to use hash tables. Assuming the hash table stores \<shortURL, longURL\> pairs, URL redirecting can be implemented by the following:
 
 - Get longURL\: longURL = hashTable.get(shortURL)
 - Once you get the longURL, perform the URL redirect.
@@ -118,7 +120,7 @@ Up until now, we have discussed the high-level design of URL shortening and URL 
 
 ### Data model
 
-In the high-level design, everything is stored in a hash table. This is a good starting point; however, this approach is not feasible for real-world systems as memory resources are limited and expensive. A better option is to store <shortURL, longURL> mapping in a relational database. Figure 8-4 shows a simple database table design. The simplified version of the table contains 3 columns: id, shortURL, longURL.
+In the high-level design, everything is stored in a hash table. This is a good starting point; however, this approach is not feasible for real-world systems as memory resources are limited and expensive. A better option is to store \<shortURL, longURL\> mapping in a relational database. Figure 8-4 shows a simple database table design. The simplified version of the table contains 3 columns: id, shortURL, longURL.
 
 ![figure8-4](/static/images/System-Design-Interview/figure8-4.jpg) 
 
@@ -217,7 +219,7 @@ environment, implementing a unique ID generator is challenging. Luckily, we have
 
 ### URL redirecting deep dive
 
-Figure 8-8 shows the detailed design of the URL redirecting. As there are more reads than writes, <shortURL, longURL> mapping is stored in a cache to improve performance.
+Figure 8-8 shows the detailed design of the URL redirecting. As there are more reads than writes, \<shortURL, longURL\> mapping is stored in a cache to improve performance.
 
 ![figure8-8](/static/images/System-Design-Interview/figure8-8.jpg) 
 

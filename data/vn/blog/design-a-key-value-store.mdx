@@ -179,8 +179,9 @@ If W = 1 and R = N, the system is optimized for fast write.
 
 If W + R > N, strong consistency is guaranteed (Usually N = 3, W = R = 2).
 
-
-If W + R \<= N, strong consistency is not guaranteed.
+```
+If W + R <= N, strong consistency is not guaranteed.
+```
 
 Depending on the requirement, we can tune the values of W, R, N to achieve the desired level of consistency.
 
@@ -341,7 +342,7 @@ Figure 6-19 explains what happens after a write request is directed to a specifi
 
 1. The write request is persisted on a commit log file.
 2. Data is saved in the memory cache.
-3. When the memory cache is full or reaches a predefined threshold, data is flushed to SSTable [9] on disk. Note: A sorted-string table (SSTable) is a sorted list of <key, value> pairs. For readers interested in learning more about SStable, refer to the reference material [9].
+3. When the memory cache is full or reaches a predefined threshold, data is flushed to SSTable [9] on disk. Note: A sorted-string table (SSTable) is a sorted list of \<key, value\> pairs. For readers interested in learning more about SStable, refer to the reference material [9].
 
 ## Read path
 
