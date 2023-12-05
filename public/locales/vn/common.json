@@ -58,7 +58,7 @@
     "search_posts": "Buscar publicaciones",
     "published_on": "Publicado el",
     "under_construction": "En construcción",
-    "reading_time": "Thời gian để đọc: {{time}}",
+    "reading_time": "Thời gian đọc: {{time}} phút",
     "mins": "mins",
     "views": "vistos"
   },
