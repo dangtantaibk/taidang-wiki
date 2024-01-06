@@ -21,8 +21,6 @@ I am eager to introduce the concept of instruction-tuned LLMs. Unlike base LLMs 
 
 In this blog, I will explore a range of LLM use cases, including text summarization, inference, transformation, expansion, and even building chatbots using LLMs. My goal is to ignite your imagination and inspire you to create innovative applications quickly using LLM APIs.
 
-I've designed this blog with insights from experts at OpenAI and DeepLearning.ai, aiming to provide a comprehensive understanding of these technologies. You'll learn about the best practices for using instruction-tuned LLMs, which are becoming the preferred choice for their enhanced safety, reliability, and user-intent alignment.
-
 Prompt engineering, in this context, is both an art and a science. It requires clarity and specificity in your requests, similar to instructing a knowledgeable yet task-unaware individual. The effectiveness of LLM responses greatly depends on how precise your prompts are.
 
 So, prepare to delve deep into the world of LLMs. I will provide you with the necessary skills and knowledge to fully leverage their potential. Whether you're a developer looking to integrate these models into your applications or an enthusiast eager to understand the future of AI in software development, this blog is tailored to satisfy both your professional and personal curiosity. Let's start this enlightening journey together!
@@ -55,7 +53,7 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     return response.choices[0].message["content"]
 ```
 
-**Note:** This and all other lab notebooks of this course use OpenAI library version `0.27.0`
+**Note:** This and all other lab notebooks of this blog use OpenAI library version `0.27.0`
 
 In order to use the OpenAI library version `1.0.0`, here is the code that you would use instead for the `get_completion` function:
 

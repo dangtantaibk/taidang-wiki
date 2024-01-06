@@ -1,36 +1,34 @@
 ---
-title: 'ChatGPT-4 prompt engineering for developers' 
+title: 'ChatGPT-4 prompt engineering cho developer' 
 date: '2023-12-31'
 tags: ['prompt-engineering']
 draft: false
-summary: 'This blog explores the potential of ChatGPT-4 and Large Language Models in software development, 
-focusing on prompt engineering, practical applications, and integrating GPT-4 Turbo with Python for innovative solutions.'
+summary: 'Blog này sẽ khám phá tìm năng của ChatGPT-4 và Large Language Models trong việc phát triển phần mềm, 
+Tập trung vào prompt engineering, ứng dụng thực tế, và tích hợp GPT-4 Turbo với Python cho các giải pháp đổi mới.'
 images: ['/static/images/logo.jpg']
 authors: ['default']
 ---
-
 import Twemoji from './Twemoji.tsx'
-import UnsplashPhotoInfo from './UnsplashPhotoInfo.tsx'
 
 ![thumbnail-image](/static/images/chatgpt-4-prompt.png)
 
-## Introduction
-Welcome to my comprehensive blog on "ChatGPT-4 Prompt Engineering for Developers." In this blog, I'm excited to take you through the complex and ever-evolving world of Large Language Models (LLMs), especially focusing on their application in software development and product innovation.
+## Giới thiệu
+Chào mừng bạn đến với blog "ChatGPT-4 Prompt Engineering cho Developers". Trong blog này, tôi rất vui được đưa bạn tới thế giới phức tập và không ngừng đổi mới của Large Language Models (LLMs), đặc biệt tập trung vào những ứng dụng của nó trong software development và đổi mới sản phẩm.
 
-I am eager to introduce the concept of instruction-tuned LLMs. Unlike base LLMs that are trained to predict the next word in a sequence, instruction-tuned LLMs are crafted to follow specific instructions, making them more suited for practical applications. This distinction is vital for developers who aim to use LLMs for targeted and efficient outcomes in their software applications.
+Tôi háo hức được giới thiệu về khái niệm của instruction-tuned LLMs. Không giống như phiên bản base LLMs được đào tạo để dự đoán từ tiếp theo trong một chuỗi câu, intruction-tuned LLMs được chế tạo để theo các chỉ dẫn đặc biệt, làm cho chúng phù hợp hơn với các ứng dụng thực tế. Tính khác nhau này là thiết yếu cho các developers, những người sử dụng LLMs nhằm mục đích đạt được các kết quả và hiệu quả trong các ứng dụng phần mềm của họ.
 
-In this blog, I will explore a range of LLM use cases, including text summarization, inference, transformation, expansion, and even building chatbots using LLMs. My goal is to ignite your imagination and inspire you to create innovative applications quickly using LLM APIs.
+Trong blog này, tôi sẽ khám phá một loạt các trường hợp sử dụng LLM, trong đó bao gồm tóm tắt văn bản, sự suy luận, sự tiến hoá, sự mở rộng, và kể cả xây dựng chatbots bằng LLMs. Mục tiêu của tôi là khơi gợi lại trí tưởng tượng của bạn và truyền cảm hứng cho bạn có thể xây dựng các ứng dụng sáng tạo bằng LLMs APIs.
 
-I've designed this blog with insights from experts at OpenAI and DeepLearning.ai, aiming to provide a comprehensive understanding of these technologies. You'll learn about the best practices for using instruction-tuned LLMs, which are becoming the preferred choice for their enhanced safety, reliability, and user-intent alignment.
+Prompt engineering, trong ngữ cảnh này, vừa là nghệ thuật và vừa là một môn khoa học. Nó yêu cầu sự rõ ràng và cụ thể trong yêu cầu của bạn, tương tự như việc hướng dẫn một cá nhân có hiểu biết, có kiến thức nhưng lại không nhận được nhiệm vụ cụ thể. Hiệu quả của phản hồi từ LLM phụ thuộc rất nhiều vào mức độ chính xác của các prompt của bạn.
 
-Prompt engineering, in this context, is both an art and a science. It requires clarity and specificity in your requests, similar to instructing a knowledgeable yet task-unaware individual. The effectiveness of LLM responses greatly depends on how precise your prompts are.
+Vì vậy, để chuẩn bị đi sâu hơn vào thế giới của LLMs. Tôi sẽ cung cấp cho bạn với các kỹ năng cần thiết và kiến thức đủ để tận dụng những tiềm năng của chúng. Cho dù bạn là một developer đang muốn tích hợp những mô hình này vào ứng dụng của bạn hay là một người đam mê, muốn tìm hiểu hơn về tương lại của AI trong phát triển phần mềm, blog này được thiết kế để phù hợp cho cả nghề nghiệp và cá nhân của bạn. Hãy cùng nhau bắt đầu cuộc hành trình khai sáng này.
 
-So, prepare to delve deep into the world of LLMs. I will provide you with the necessary skills and knowledge to fully leverage their potential. Whether you're a developer looking to integrate these models into your applications or an enthusiast eager to understand the future of AI in software development, this blog is tailored to satisfy both your professional and personal curiosity. Let's start this enlightening journey together!
-## Guidelines
-In this chapter, you'll practice two prompting principles and their related tactics in order to write effective prompts for large language models.
+## Hướng dẫn
+Trong phần này, chúng ta sẽ luyện tập với 2 Nguyên tắc của prompt và những chiến thuật liên quan của nó để viết prompt hiệu quả cho large language models.
 
 ### Setup
-Load the API key and relevant Python libaries.
+Load OpenAI_API_KEY và các thư viện python liên quan.
+
 ``` python
 import openai
 import os
@@ -41,23 +39,23 @@ _ = load_dotenv(find_dotenv())
 openai.api_key  = os.getenv('OPENAI_API_KEY')
 ```
 ### helper function
-Throughout this blog, we will use OpenAI's gpt-4-1106-preview model and [the chat completions endpoint](https://platform.openai.com/playground?mode=chat&model=gpt-4-1106-preview).
+Xuyên suốt blog này, chúng ta sẽ sử dụng OpenAI's gpt-4-1106-preview model và [the chat completions endpoint](https://platform.openai.com/playground?mode=chat&model=gpt-4-1106-preview).
 
-This helper function will make it easier to use prompts and look at the generated outputs.
+Đây là function giúp cho việc sử dụng các prompts trở nên dễ dàng hơn và xem các outputs được tạo ra.
 ``` python
 def get_completion(prompt, model="gpt-3.5-turbo"):
     messages = [{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
+        temperature=0, # Đây là thông số điều chỉnh mức độ ngẫu nhiên đầu ra của model
     )
     return response.choices[0].message["content"]
 ```
 
-**Note:** This and all other lab notebooks of this course use OpenAI library version `0.27.0`
+**Ghi chú:** Tất cả notebooks trong blog này đề sử dụng thư viện OpenAI với version `0.27.0`
 
-In order to use the OpenAI library version `1.0.0`, here is the code that you would use instead for the `get_completion` function:
+Để sử dụng thư viện OpenAI version `1.0.0`. đây là code để bạn có thể thay thế function `get_completion`:
 
 ``` python 
 client = openai.OpenAI()
@@ -72,21 +70,21 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     return response.choices[0].message.content
 ```
 
-### Prompting Principles
-1. ***Principle 1: Write clear and specific instructions***
-2. ***Principle 2: Give the model time to “think”*** 
+### Nguyên tắc của Prompting
+1. ***Nguyên tắc 1: Viết hướng dẫn rõ ràng và cụ thể***
+2. ***Nguyên tắc 2: Cho model thời gian để “suy nghĩ”*** 
 
-### Principle 1: Write clear and specific instructions
-**Tactic 1: Use delimiters to clearly indicate distinct parts of the input**
-- Delimiters can be anything like: ```, """, < >, \<tag> \</tag>, :
+### Nguyên tắc 1: Viết hướng dẫn rõ ràng và cụ thể
+**Chiến thuật 1: Sử dụng dấu phân cách để chỉ rõ các phần riêng biệt của input**
+- Dấu phân cách có thể là bất kỳ thứ gì giống như: ```, """, < >, \<tag> \</tag>, :
 ``` python
 text = f"""
-You should express what you want a model to do by providing instructions that are as clear and specific as you can possibly make them. \ 
-This will guide the model towards the desired output, and reduce the chances of receiving irrelevant or incorrect responses. Don't confuse writing a clear prompt with writing a short prompt. \ 
-In many cases, longer prompts provide more clarity and context for the model, which can lead to more detailed and relevant outputs.
+Bạn nên thể hiện những gì bạn muốn một model thực hiện bằng cách cung cấp các hướng dẫn rõ ràng và cụ thể nhất. \
+Điều này sẽ hướng dẫn model hướng tới đầu ra mong muốn, và giảm tỉ lệ nhận được các phản hồi không liên quan hoặc không chính xác. Đừng nhầm lẫn giữa việc viết prompt rõ ràng với việc viết prompt ngắn gọn. \
+Trong nhiều trường hợp, prompts dài đầy đủ cung cấp nhiều sự rõ ràng và bối cảnh cho model hơn, thứ mà có thể dẫn đến kết quả đầu ra chi tiết và liên quan hơn.
 """
 prompt = f"""
-Summarize the text delimited by triple backticks into a single sentence.
+Tóm tắt văn bản được ngăn cách bằng 3 dấu nháy thành một câu độc lập.
 ```{text}```
 """
 response = get_completion(prompt)
@@ -94,151 +92,187 @@ print(response)
 ```
 
 <details>
-  To guide a model towards the desired output and reduce irrelevant or incorrect responses, it is important to provide clear and specific instructions, which can be achieved through longer prompts that offer more clarity and context.
+  Cung cấp hướng dẫn rõ ràng và cụ thể nhất để model hiểu yêu cầu và tránh nhận phản hồi không liên quan hoặc không chính xác. Không nhầm lẫn giữa việc viết prompt rõ ràng và viết prompt ngắn gọn. Prompts dài đầy đủ cung cấp nhiều bối cảnh và có thể dẫn đến kết quả đầu ra chi tiết và liên quan hơn.
 </details>
 
-**Tactic 2: Ask for a structured output**
+**Chiến thuật 2: Hỏi với yêu cầu một output có cấu trúc**
 - JSON, HTML
 ``` python
 prompt = f"""
-Generate a list of three made-up book titles along with their authors and genres. 
-Provide them in JSON format with the following keys: 
-book_id, title, author, genre.
+Tạo ra 1 danh sách gồm 3 phần tử tự tạo bao gồm: Tên sách, tác giả và thể loại.
+Cung cấp chúng ở định dạng JSON với các key như sau: book_id, title, author, genre.
 """
 response = get_completion(prompt)
 print(response)
 ```
 <details>
 ```
-{
-  "books": [
-    {
-      "book_id": 1,
-      "title": "The Enigma of Elysium",
-      "author": "Evelyn Sinclair",
-      "genre": "Mystery"
-    },
-    {
-      "book_id": 2,
-      "title": "Whispers in the Wind",
-      "author": "Nathaniel Blackwood",
-      "genre": "Fantasy"
-    },
-    {
-      "book_id": 3,
-      "title": "Echoes of the Past",
-      "author": "Amelia Hart",
-      "genre": "Romance"
-    }
-  ]
-}
+[
+  {
+    "book_id": 1,
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "author": "J.K. Rowling",
+    "genre": "Fantasy"
+  },
+  {
+    "book_id": 2,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "genre": "Fiction"
+  },
+  {
+    "book_id": 3,
+    "title": "1984",
+    "author": "George Orwell",
+    "genre": "Dystopian"
+  }
+]
 ```
 </details>
 
-**Tactic 3: Ask the model to check whether conditions are satisfied**
+**Chiến thuật 3: Yêu cầu model kiểm tra các điều kiện có thoả mãn.**
 ``` python
 text_1 = f"""
-Making a cup of tea is easy! First, you need to get some water boiling. While that's happening, grab a cup and put a tea bag in it. Once the water is hot enough, just pour it over the tea bag. \ 
-Let it sit for a bit so the tea can steep. After a few minutes, take out the tea bag. If you like, you can add some sugar or milk to taste. \ 
-And that's it! You've got yourself a delicious cup of tea to enjoy.
+Tạo ra một tách trà thật đơn giản| Đầu tiên, bạn cần đun sôi một ít nước. Trong khi đang đun nước, lấy một cái cốc và đặt một túi trà vào trong đó. Khi nước đủ nóng, chỉ cần đổ nước lên túi trà. \
+Chúng ta hãy chờ một tí để trà có thể ngấm sâu hơn. Sau đó một vài phút, lấy túi trà ra khỏi. Nếu thích, bạn có thể thêm một ít đường hoặc sữa cho vừa miệng. \
+Và thế là xong! Bạn đã có cho mình một tách trà thơm ngon để thưởng thức.
 """
 prompt = f"""
-You will be provided with text delimited by triple quotes. 
-If it contains a sequence of instructions, re-write those instructions in the following format:
+Bạn sẽ được cung cấp văn bản được phân tách bằng 3 dấu nháy.
+Nếu nó chứa một đoạn hướng dẫn, hãy viết lại các hướng dẫn đó theo định dạng bên dưới:
 
-Step 1 - ...
-Step 2 - …
+Bước 1 - ...
+Bước 2 - …
 …
-Step N - …
+Bước N - …
 
-If the text does not contain a sequence of instructions, then simply write \"No steps provided.\"
+Nếu văn bản không chứa bất kỳ đoạn hướng dẫn nào, chỉ cần viết \"Không có bước nào được cung cấp.\"
 
 \"\"\"{text_1}\"\"\"
 """
 response = get_completion(prompt)
-print("Completion for Text 1:")
+print("Các bước của văn bản 1:")
 print(response)
 ```
 <details>
-- Completion for Text 1:
-    - Step 1 - Get some water boiling.
-    - Step 2 - Grab a cup and put a tea bag in it.
-    - Step 3 - Once the water is hot enough, pour it over the tea bag.
-    - Step 4 - Let it sit for a bit so the tea can steep.
-    - Step 5 - After a few minutes, take out the tea bag.
-    - Step 6 - If you like, add some sugar or milk to taste.
-    - Step 7 - Enjoy your delicious cup of tea.
+- Các bước của văn bản 1:
+    - Bước 1 - Đun sôi một ít nước.
+    - Bước 2 - Lấy một cái cốc và đặt một túi trà vào trong đó.
+    - Bước 3 - Đổ nước sôi lên túi trà.
+    - Bước 4 - Chờ một tí để trà có thể ngấm sâu hơn.
+    - Bước 5 - Sau đó một vài phút, lấy túi trà ra khỏi cốc.
+    - Bước 6 - (Tùy chọn) Thêm một ít đường hoặc sữa cho vừa miệng.
+    - Bước 7 - Thưởng thức tách trà thơm ngon của bạn.
 </details>
-**Tactic 4: "Few-shot" prompting**
+**Chiến thuật 4: "Few-shot" prompting**
 ``` python 
 prompt = f"""
-Your task is to answer in a consistent style.
+Nhiệm vụ của bạn là trả lời trong 1 phong cách nhất quán.
 
-<child>: Teach me about patience.
+<Cháu>: Dạy cháu về sự kiên nhẫn.
 
-<grandparent>: The river that carves the deepest valley flows from a modest spring; the grandest symphony originates from a single note; 
-the most intricate tapestry begins with a solitary thread.
+<Bà ngoại>: Con sông tạo nên một thung lũng sâu nhất, nó được tạo nên từ một con suối nhỏ bé; \
+Bản giao hưởng vĩ đại nhất cũng được bắt nguồn từ một nốt nhạc duy nhất; \
+Một tấm thảm phức tạp nhất cũng bắt đầu bằng một sợi chỉ đơn độc.
 
-<child>: Teach me about resilience.
+<Cháu>: Dạy cháu về sự kiên cường.
 """
 response = get_completion(prompt)
 print(response)
 ```
 <details>
-- \<grandparent\>: Resilience is like a mighty oak tree that withstands the strongest storms, bending but never breaking. It is the ability to bounce back from adversity, to find strength in the face of challenges, and to persevere even when the odds seem insurmountable. Just as a diamond is formed under immense pressure, resilience is forged through the trials and tribulations of life.
+- \<Bà ngoại\>: Sự kiên cường không phải là một phẩm chất tự nhiên, mà nó được hình thành từ những thử thách và khó khăn trong cuộc sống. 
+Như con sông tạo nên một thung lũng sâu nhất từ một con suối nhỏ bé, sự kiên cường cũng được xây dựng từ những bước tiến nhỏ nhặt và những nỗ lực không ngừng nghỉ. 
+Giống như bản giao hưởng vĩ đại nhất bắt nguồn từ một nốt nhạc duy nhất, sự kiên cường cũng bắt đầu từ những quyết định và hành động nhỏ nhặt. 
+Và giống như một tấm thảm phức tạp nhất bắt đầu bằng một sợi chỉ đơn độc, sự kiên cường cũng bắt đầu từ sự kiên nhẫn và kiên trì trong mỗi bước đi. 
+Hãy nhớ rằng sự kiên cường không phải là một phẩm chất mà chúng ta có sẵn, mà nó là một kỹ năng mà chúng ta có thể rèn luyện và phát triển thông qua sự kiên nhẫn và quyết tâm.
 </details>
 
-Principle 2: Give the model time to “think”
-**Tactic 1: Specify the steps required to complete a task**
+Nguyên tắc 2: Cho model thời gian để “suy nghĩ”
+**Chiến thuật 1: Định nghĩa rõ ràng từng bước để hoàn thành nhiệm vụ.**
 ``` python 
 text = f"""
-In a charming village, siblings Jack and Jill set out on a quest to fetch water from a hilltop well. As they climbed, singing joyfully, misfortune \ 
-struck—Jack tripped on a stone and tumbled down the hill, with Jill following suit. Though slightly battered, the pair returned home to \ 
-comforting embraces. Despite the mishap, their adventurous spirits remained undimmed, and they continued exploring with delight.
+Ở một ngôi làng quyến rũ, anh em nhà Jack và Jill bắt đầu thực hiện nhiệm vụ lấy nước từ một cái giếng trên đỉnh đồi. Khi họ đang leo lên, họ ca hát vui vẻ, 
+một bất ngờ ập đến, Jack vấp phải hoàn đá và ngã nhào xuống đồi, với Jill theo sau. Mặc dù bị bầm dập, nhưng cặp đôi vẫn trở về nhà được an toàn. \
+Bất chấp sự cố, tinh thần phiêu lưu của họ vẫn không hề suy giảm, và họ tiếp tục khám phá với niềm yêu thích của mình.
 """
-# example 1
+# Ví dụ 1
 prompt_1 = f"""
-Perform the following actions: 
-1 - Summarize the following text delimited by triple backticks with 1 sentence.
-2 - Translate the summary into French.
-3 - List each name in the French summary.
-4 - Output a json object that contains the following keys: french_summary, num_names.
+Thực hiện các hành động sau:
+1 - Tóm tắt lại văn bản được phân tách bằng 3 dấu nháy thành 1 câu đầy đủ ý.
+2 - Dịch bản tóm tắt ra tiếng Anh.
+3 - Liệt kê mỗi tên trong bản tóm tắt tiếng Anh này.
+4 - Cho ra output là một json object chứa các từ khoá sau: eng_summary, num_names.
 
-Separate your answers with line breaks.
+Tách câu trả lời của bạn bằng dấu xuống dòng.
 
-Text:
+Văn bản:
 ```{text}```
 """
 response = get_completion(prompt_1)
-print("Completion for prompt 1:")
+print("Hoàn thành cho prompt 1:")
 print(response)
 ```
+<details>
+Hoàn thành cho prompt 1:
+1 - Tóm tắt lại văn bản: Anh em nhà Jack và Jill ở một ngôi làng quyến rũ bắt đầu lấy nước từ cái giếng trên đồi. Khi đang leo lên, Jack vấp phải hoàn đá và ngã xuống đồi, Jill theo sau. Mặc dù bị bầm dập, cả hai vẫn trở về nhà an toàn và tiếp tục khám phá với niềm yêu thích của mình.
 
-**Ask for output in a specified format**
+2 - Translation: Jack and Jill, siblings from a charming village, start fetching water from a well on top of a hill. While climbing up, Jack trips over a rock and falls down the hill, with Jill following. Despite being bruised, the pair safely returns home and continues their exploration with their enthusiasm undiminished.
+
+3 - List of names: Jack, Jill
+
+4 - Output: 
+``` JSON
+{
+  "eng_summary": "Jack and Jill, siblings from a charming village, start fetching water from a well on top of a hill. While climbing up, Jack trips over a rock and falls down the hill, with Jill following. Despite being bruised, the pair safely returns home and continues their exploration with their enthusiasm undiminished.",
+  "num_names": 2
+}
+```
+
+</details>
+
+**Yêu cầu câu trả lời với một định dạng cụ thể**
 ```python 
 prompt_2 = f"""
-Your task is to perform the following actions: 
-1 - Summarize the following text delimited by 
-  <> with 1 sentence.
-2 - Translate the summary into French.
-3 - List each name in the French summary.
-4 - Output a json object that contains the 
-  following keys: french_summary, num_names.
+Nhiệm vụ của bạn là thực hiện các hành động sau:
+1 - Tóm tắt văn bản được ngăn cách bởi <> với 1 câu.
+2 - Dịch đoạn tóm tắt này bằng tiếng Anh.
+3 - Liệt kê mỗi tên riêng trong đoạn tóm tắt bằng tiếng Anh.
+4 - Output là một json object chưa các key sau: eng_summary, num_names.
 
-Use the following format:
-Text: <text to summarize>
-Summary: <summary>
-Translation: <summary translation>
-Names: <list of names in summary>
-Output JSON: <json with summary and num_names>
+Sử dụng định dạng sau:
+Văn bản: <văn bản cần tóm tắt>
+Tóm tắt: <câu tóm tắt>
+Dịch: <câu tóm tắt sau khi dịch>
+Những cái tên: <Danh sách những cái tên trong câu tóm tắt>
+Output JSON: <json với eng_summary và num_names>
 
-Text: <{text}>
+Văn bản: <{text}>
 """
 response = get_completion(prompt_2)
-print("\nCompletion for prompt 2:")
+print("\nHoàn thành cho prompt 2:")
 print(response)
 ```
+<details>
+Hoàn thành cho prompt 2:
+Văn bản: Ở một ngôi làng quyến rũ, anh em nhà Jack và Jill bắt đầu thực hiện nhiệm vụ lấy nước từ một cái giếng trên đỉnh đồi. Khi họ đang leo lên, họ ca hát vui vẻ, một bất ngờ ập đến, Jack vấp phải hoàn đá và ngã nhào xuống đồi, với Jill theo sau. Mặc dù bị bầm dập, nhưng cặp đôi vẫn trở về nhà được an toàn. Bất chấp sự cố, tinh thần phiêu lưu của họ vẫn không hề suy giảm, và họ tiếp tục khám phá với niềm yêu thích của mình.
 
+Tóm tắt: 
+Anh em nhà Jack và Jill ở một ngôi làng quyến rũ bắt đầu nhiệm vụ lấy nước từ một cái giếng trên đỉnh đồi. Khi leo lên, Jack vấp phải hoàn đá và ngã xuống đồi, Jill theo sau. Mặc dù bị bầm dập, cả hai vẫn trở về nhà an toàn và tiếp tục khám phá với niềm yêu thích của mình.
+
+Dịch: 
+Jack and Jill, siblings from a charming village, embark on a mission to fetch water from a well atop a hill. As they climb, they sing happily, but an unexpected incident occurs - Jack trips on a rock and tumbles down the hill, with Jill following suit. Despite their bruises, the duo safely returns home and continues their exploration with undiminished adventurous spirit.
+
+Những cái tên: Jack, Jill
+
+JSON: 
+``` JSON
+{
+  "eng_summary": "Jack and Jill, siblings from a charming village, embark on a mission to fetch water from a well atop a hill. As they climb, they sing happily, but an unexpected incident occurs - Jack trips on a rock and tumbles down the hill, with Jill following suit. Despite their bruises, the duo safely returns home and continues their exploration with undiminished adventurous spirit.",
+  "num_names": 2
+}
+```
+</details>
 **Tactic 2: Instruct the model to work out its own solution before rushing to a conclusion**
 
 ```python 
